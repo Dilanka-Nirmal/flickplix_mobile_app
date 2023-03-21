@@ -43,8 +43,8 @@ const ResetPasswordScreen = ({navigation}) => {
         navigation.navigate('LoginScreen');
       })
       .catch(error => {
-        const errorMessage = error.message;
         setLoading(false);
+        const errorMessage = error.message;        
         Alert.alert('Error', errorMessage);
       });
   };

@@ -10,7 +10,10 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Firebase imports
-import {createUserWithEmailAndPassword} from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from 'firebase/auth';
 import {auth} from '../../../firebase';
 
 // Custom imports
@@ -70,15 +73,16 @@ const RegistrationScreen = ({navigation}) => {
   const register = () => {
     setLoading(true);
     createUserWithEmailAndPassword(auth, inputs.email, inputs.password)
-      .then(async () => {
+      .then(async userCredential => {
         setLoading(false);
+        sendEmailVerification(auth.currentUser);
+        navigation.navigate('LoginScreen', {user: userCredential.user});
         Alert.alert('Success', 'Registration Successful');
-        
-        navigation.navigate('LoginScreen');
+        // navigation.navigate('LoginScreen');
       })
       .catch(error => {
-        const errorMessage = error.message;
         setLoading(false);
+        const errorMessage = error.message;
         Alert.alert('Error', errorMessage);
       });
   };
