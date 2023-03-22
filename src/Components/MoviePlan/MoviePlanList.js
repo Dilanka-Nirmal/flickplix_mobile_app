@@ -6,9 +6,11 @@ import MoviePlanListModal from './MoviePlanListModal';
 export default MoviePlanList = ({list, updateMoviePlanList}) => {
   const [getListVisible, setListVisible] = React.useState(false);
 
+  // Function to handle the visibility of the modal
   const handleListVisible = () =>
     getListVisible ? setListVisible(false) : setListVisible(true);
 
+  // Counting the number of completed and remaining todos
   const completedCount = list.todos.filter(todo => todo.completed).length;
   const remainingCount = list.todos.length - completedCount;
 

@@ -26,6 +26,7 @@ export default MoviePlanListModal = ({
   const [getTodo, setTodo] = React.useState('');
   const [getList, setList] = React.useState(list);
 
+  // Toggle Movie Plan Completed
   const toggleTodoCompleted = index => {
     let list = getList;
     list.todos[index].completed = !list.todos[index].completed;

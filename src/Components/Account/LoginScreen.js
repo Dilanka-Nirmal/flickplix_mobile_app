@@ -58,10 +58,12 @@ const LoginScreen = ({navigation}) => {
       });
   };
 
+  // Handle input change
   const handleOnchange = (text, input) => {
     setInputs(prevState => ({...prevState, [input]: text}));
   };
 
+  // Handle error
   const handleError = (error, input) => {
     setErrors(prevState => ({...prevState, [input]: error}));
   };

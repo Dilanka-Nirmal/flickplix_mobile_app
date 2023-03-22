@@ -44,15 +44,17 @@ const ResetPasswordScreen = ({navigation}) => {
       })
       .catch(error => {
         setLoading(false);
-        const errorMessage = error.message;        
+        const errorMessage = error.message;
         Alert.alert('Error', errorMessage);
       });
   };
 
+  // Handle input change
   const handleOnchange = (text, input) => {
     setInputs(prevState => ({...prevState, [input]: text}));
   };
 
+  // Handle input error
   const handleError = (error, input) => {
     setErrors(prevState => ({...prevState, [input]: error}));
   };

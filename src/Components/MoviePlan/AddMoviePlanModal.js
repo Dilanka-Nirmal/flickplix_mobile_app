@@ -28,7 +28,7 @@ export default AddMoviePlanModal = ({handleTodoVisible, addMoviePlanList}) => {
 
   const [getName, setName] = React.useState('');
 
-  // Create ToDo
+  // Create Movie Plan's ToDo List
   const createToDo = () => {
     const [name, color] = [getName, getSelectedColor];
 
