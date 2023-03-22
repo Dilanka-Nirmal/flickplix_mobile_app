@@ -16,28 +16,25 @@ import {
   getDocs,
   onSnapshot,
   query,
+  orderBy,
+  addDoc,
+  updateDoc,
 } from 'firebase/firestore';
 import {auth, db} from '../../firebase';
 
 import COLORS from '../Components/Animation/Colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import ReminderList from '../Components/Reminder/ReminderList';
-import AddReminderModal from '../Components/Reminder/AddReminderModal';
+import MoviePlanList from '../Components/MoviePlan/MoviePlanList';
+import AddMoviePlanModal from '../Components/MoviePlan/AddMoviePlanModal';
 
-export const Reminder = ({navigation}) => {
+export const MoviePlan = ({navigation}) => {
   const [getUser, setUser] = React.useState(null);
   const [getTodoVisible, setTodoVisible] = React.useState(false);
-  const [getReminderList, setReminderList] = React.useState([]);
-
-  // React.useEffect(() => {
-  //   if (getUser) {
-  //     loadToDoList();
-  //   }
-  // }, [getUser]);
+  const [getMoviePlanList, setMoviePlanList] = React.useState([]);
 
   React.useEffect(() => {
     if (getUser) {
-      const unsubscribe = loadToDoList();
+      const unsubscribe = loadMoviePlanList();
 
       return () => {
         unsubscribe();
@@ -55,8 +52,12 @@ export const Reminder = ({navigation}) => {
     }
   });
 
-  const loadToDoList = () => {
-    const q = query(collection(db, 'users', getUser, 'lists'));
+  // Load movie plan list
+  const loadMoviePlanList = () => {
+    const q = query(
+      collection(db, 'users', getUser, 'moviePlanList'),
+      orderBy('name', 'asc'),
+    );
 
     const unsubscribe = onSnapshot(q, querySnapshot => {
       const lists = [];
@@ -65,7 +66,7 @@ export const Reminder = ({navigation}) => {
         lists.push({id: doc.id, ...doc.data()});
       });
 
-      setReminderList(lists);
+      setMoviePlanList(lists);
     });
 
     return unsubscribe;
@@ -75,26 +76,45 @@ export const Reminder = ({navigation}) => {
     getTodoVisible ? setTodoVisible(false) : setTodoVisible(true);
 
   const renderList = list => {
-    return <ReminderList list={list} updateReminderList={updateReminderList} />;
-  };
-
-  const addReminderList = list => {
-    setReminderList([
-      ...getReminderList,
-      {
-        ...list,
-        id: getReminderList.length + 1,
-        todos: [],
-      },
-    ]);
-  };
-
-  const updateReminderList = list => {
-    setReminderList(
-      getReminderList.map(item => {
-        return item.id === list.id ? list : item;
-      }),
+    return (
+      <MoviePlanList list={list} updateMoviePlanList={updateMoviePlanList} />
     );
+  };
+
+  // const addMoviePlanList = list => {
+  //   setMoviePlanList([
+  //     ...getMoviePlanList,
+  //     {
+  //       ...list,
+  //       id: getMoviePlanList.length + 1,
+  //       todos: [],
+  //     },
+  //   ]);
+  // };
+
+  // Add new movie plan list
+  const addMoviePlanList = list => {
+    const q = query(collection(db, 'users', getUser, 'moviePlanList'));
+    const retrievedList = {
+      name: list.name,
+      color: list.color,
+      todos: [],
+    };
+    return addDoc(q, retrievedList);
+  };
+
+  // const updateMoviePlanList = list => {
+  //   setMoviePlanList(
+  //     getMoviePlanList.map(item => {
+  //       return item.id === list.id ? list : item;
+  //     }),
+  //   );
+  // };
+
+  // Update movie plan list
+  const updateMoviePlanList = list => {
+    const q = query(collection(db, 'users', getUser, 'moviePlanList'));
+    return updateDoc(doc(q, list.id), list);
   };
 
   return (
@@ -103,15 +123,16 @@ export const Reminder = ({navigation}) => {
         animationType="slide"
         visible={getTodoVisible}
         onRequestClose={handleTodoVisible}>
-        <AddReminderModal
+        <AddMoviePlanModal
           handleTodoVisible={handleTodoVisible}
-          addReminderList={addReminderList}
+          addMoviePlanList={addMoviePlanList}
         />
       </Modal>
       <View styles={{flexDirection: 'row'}}>
         {/* <View style={styles.divider} /> */}
         <Text style={styles.title}>
-          ToDo <Text style={{fontWeight: '300', color: COLORS.blue}}>List</Text>
+          Movie Plan{' '}
+          <Text style={{fontWeight: '300', color: COLORS.blue}}>List</Text>
         </Text>
         {/* <View style={styles.divider} /> */}
       </View>
@@ -125,7 +146,7 @@ export const Reminder = ({navigation}) => {
 
       <View style={{height: 275, paddingLeft: 32}}>
         <FlatList
-          data={getReminderList}
+          data={getMoviePlanList}
           keyExtractor={item => item.id.toString()}
           horizontal={true}
           showsHorizontalScrollIndicator={false}

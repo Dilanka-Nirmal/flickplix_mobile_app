@@ -3,7 +3,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {Home} from '../../../Features/Home';
 import {WatchList} from '../../../Features/WatchList';
 import {Payment} from '../../../Features/Payment';
-import {Reminder} from '../../../Features/Reminder';
+import {MoviePlan} from '../../../Features/MoviePlan';
 import {Profile} from '../../../Features/Profile';
 
 const Tab = createBottomTabNavigator();
@@ -24,7 +24,7 @@ export const MainNavigator = () => {
           } else if (route.name === 'Payment') {
             iconName = 'credit-card-multiple';
             color = focused ? '#3f37c9' : '#BABBC3';
-          } else if (route.name === 'Reminder') {
+          } else if (route.name === 'Movie Plan') {
             iconName = 'cookie-clock';
             color = focused ? '#3f37c9' : '#BABBC3';
           } else if (route.name === 'Profile') {
@@ -52,8 +52,8 @@ export const MainNavigator = () => {
         options={{headerShown: false}}
       />
       <Tab.Screen
-        name="Reminder"
-        component={Reminder}
+        name="Movie Plan"
+        component={MoviePlan}
         options={{headerShown: false}}
       />
       <Tab.Screen

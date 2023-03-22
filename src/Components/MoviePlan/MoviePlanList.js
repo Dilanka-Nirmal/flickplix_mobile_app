@@ -1,14 +1,16 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Modal} from 'react-native';
 import COLORS from '../Animation/Colors';
-import ReminderListModal from './ReminderListModal';
+import MoviePlanListModal from './MoviePlanListModal';
 
-export default ReminderList = ({list, updateReminderList}) => {
+export default MoviePlanList = ({list, updateMoviePlanList}) => {
   const [getListVisible, setListVisible] = React.useState(false);
 
+  // Function to handle the visibility of the modal
   const handleListVisible = () =>
     getListVisible ? setListVisible(false) : setListVisible(true);
 
+  // Counting the number of completed and remaining todos
   const completedCount = list.todos.filter(todo => todo.completed).length;
   const remainingCount = list.todos.length - completedCount;
 
@@ -18,10 +20,10 @@ export default ReminderList = ({list, updateReminderList}) => {
         animationType="slide"
         visible={getListVisible}
         onRequestClose={handleListVisible}>
-        <ReminderListModal
+        <MoviePlanListModal
           list={list}
           handleListVisible={handleListVisible}
-          updateReminderList={updateReminderList}
+          updateMoviePlanList={updateMoviePlanList}
         />
       </Modal>
       <TouchableOpacity

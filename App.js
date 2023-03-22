@@ -39,7 +39,7 @@ export default function App() {
           setInitialRouteName('LoginScreen');
         }
       } else {
-        setInitialRouteName('RegistrationScreen');
+        setInitialRouteName('LoginScreen');
       }
     } catch (error) {
       setInitialRouteName('RegistrationScreen');
