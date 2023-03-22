@@ -9,14 +9,16 @@ import {
   KeyboardAvoidingView,
   TextInput,
   Keyboard,
+  Animated,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import COLORS from '../../Components/Animation/Colors';
+import COLORS from '../Animation/Colors';
+import {GestureHandlerRootView, Swipeable} from 'react-native-gesture-handler';
 
-export default ReminderListModal = ({
+export default MoviePlanListModal = ({
   list,
   handleListVisible,
-  updateReminderList,
+  updateMoviePlanList,
 }) => {
   // const [getName, setName] = React.useState(list.name);
   // const [getColor, setColor] = React.useState(list.color);
@@ -28,46 +30,92 @@ export default ReminderListModal = ({
     let list = getList;
     list.todos[index].completed = !list.todos[index].completed;
 
-    updateReminderList(list);
+    updateMoviePlanList(list);
   };
 
-  const addReminder = () => {
+  // Add Movie Plan
+  const addMoviePlan = () => {
     let list = getList;
     list.todos.push({title: getTodo, completed: false});
-    updateReminderList(list);
+    updateMoviePlanList(list);
     setTodo();
     Keyboard.dismiss();
   };
 
+  //Delete Movie Plan
+  const deleteMoviePlan = index => {
+    let list = getList;
+    list.todos.splice(index, 1);
+    updateMoviePlanList(list);
+  };
+
+  // Render Todos
   const renderToDo = (todo, index) => {
     return (
-      <View style={styles.todoContainer}>
-        <TouchableOpacity onPress={() => toggleTodoCompleted(index)}>
-          <Icon
-            name={
-              todo.completed
-                ? 'checkbox-marked-outline'
-                : 'checkbox-blank-outline'
-            }
-            size={24}
-            color={COLORS.gray}
-          />
-        </TouchableOpacity>
-        <Text
-          style={[
-            styles.todo,
-            {
-              textDecorationLine: todo.completed ? 'line-through' : 'none',
-              color: todo.completed ? COLORS.gray : COLORS.black,
-            },
-          ]}>
-          {todo.title}
-        </Text>
-      </View>
+      <GestureHandlerRootView>
+        <Swipeable
+          renderRightActions={(_, dragX) => renderRightActions(dragX, index)}>
+          <View style={styles.todoContainer}>
+            <TouchableOpacity onPress={() => toggleTodoCompleted(index)}>
+              <Icon
+                name={
+                  todo.completed
+                    ? 'checkbox-marked-outline'
+                    : 'checkbox-blank-outline'
+                }
+                size={24}
+                color={COLORS.gray}
+              />
+            </TouchableOpacity>
+            <Text
+              style={[
+                styles.todo,
+                {
+                  textDecorationLine: todo.completed ? 'line-through' : 'none',
+                  color: todo.completed ? COLORS.gray : COLORS.black,
+                },
+              ]}>
+              {todo.title}
+            </Text>
+          </View>
+        </Swipeable>
+      </GestureHandlerRootView>
     );
   };
 
+  // RightAction Gesture
+  const renderRightActions = (dragX, index) => {
+    const scale = dragX.interpolate({
+      inputRange: [-100, 0],
+      outputRange: [1, 0.9],
+      extrapolate: 'clamp',
+    });
+
+    const opacity = dragX.interpolate({
+      inputRange: [-100, -20, 0],
+      outputRange: [1, 0.9, 0],
+      extrapolate: 'clamp',
+    });
+
+    return (
+      <TouchableOpacity onPress={() => deleteMoviePlan(index)}>
+        <Animated.View style={[styles.deleteButton, {opacity: opacity}]}>
+          <Animated.Text
+            style={{
+              color: COLORS.white,
+              fontWeight: '800',
+              transform: [{scale}],
+            }}>
+            Delete
+          </Animated.Text>
+        </Animated.View>
+      </TouchableOpacity>
+    );
+  };
+
+  // Count Total Movie Plan Tasks
   const taskCount = getList.todos.length;
+  // Count Completed Movie Plan Tasks
   const completedCount = getList.todos.filter(todo => todo.completed).length;
 
   return (
@@ -93,12 +141,11 @@ export default ReminderListModal = ({
           </View>
         </View>
 
-        <View style={[styles.section, {flex: 3}]}>
+        <View style={[styles.section, {flex: 3, marginVertical: 16}]}>
           <FlatList
             data={getList.todos}
             renderItem={({item, index}) => renderToDo(item, index)}
             keyExtractor={(_, index) => index.toString()}
-            contentContainerStyle={{paddingHorizontal: 32, paddingVertical: 64}}
             showsVerticalScrollIndicator={false}
           />
         </View>
@@ -111,7 +158,7 @@ export default ReminderListModal = ({
           />
           <TouchableOpacity
             style={[styles.addTodo, {backgroundColor: getList.color}]}
-            onPress={() => addReminder()}>
+            onPress={() => addMoviePlan()}>
             <Icon name="plus" size={16} color={COLORS.white} />
           </TouchableOpacity>
         </View>
@@ -135,6 +182,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     marginLeft: 64,
     borderBottomWidth: 3,
+    paddingTop: 16,
   },
   title: {
     fontSize: 30,
@@ -151,6 +199,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     flexDirection: 'row',
     alignItems: 'center',
+    paddingVertical: 16,
   },
   input: {
     flex: 1,
@@ -170,10 +219,18 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     flexDirection: 'row',
     alignItems: 'center',
+    paddingLeft: 32,
   },
   todo: {
     color: COLORS.black,
     fontWeight: '700',
     fontSize: 16,
+  },
+  deleteButton: {
+    flex: 1,
+    backgroundColor: COLORS.red,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 80,
   },
 });

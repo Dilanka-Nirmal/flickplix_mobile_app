@@ -8,9 +8,9 @@ import {
   TextInput,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import COLORS from '../../Components/Animation/Colors';
+import COLORS from '../Animation/Colors';
 
-export default AddReminderModal = ({handleTodoVisible, addReminderList}) => {
+export default AddMoviePlanModal = ({handleTodoVisible, addMoviePlanList}) => {
   // Define Colors
   const backgroundColors = [
     '#5CD859',
@@ -33,7 +33,7 @@ export default AddReminderModal = ({handleTodoVisible, addReminderList}) => {
     const [name, color] = [getName, getSelectedColor];
 
     const list = {name, color};
-    addReminderList(list);
+    addMoviePlanList(list);
     setName('');
     handleTodoVisible();
   };
