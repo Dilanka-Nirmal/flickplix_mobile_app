@@ -99,3 +99,15 @@ const ResetPasswordScreen = ({navigation}) => {
 };
 
 export default ResetPasswordScreen;
+
+/* Reference: https://reactnative.dev/
+              https://www.npmjs.com/
+              https://www.youtube.com/@DesignIntoCode
+              https://www.youtube.com/watch?v=0c0v_40MPq8&t=366s
+              https://www.youtube.com/watch?v=TwxdOFcEah4
+              https://www.youtube.com/watch?v=sc7RNl2YZHY
+              https://www.youtube.com/watch?v=zEL-L2F0o7Q
+              https://stackoverflow.com/
+              https://medium.com/
+              https://chat.openai.com/chat
+ */
