@@ -60,7 +60,7 @@ export default AddMoviePlanModal = ({handleTodoVisible, addMoviePlanList}) => {
       </TouchableOpacity>
 
       <View style={{alignSelf: 'stretch', marginHorizontal: 32}}>
-        <Text style={styles.title}>Create Todo List</Text>
+        <Text style={styles.title}>Create Movie Plan List</Text>
         <TextInput
           style={styles.input}
           placeholder="Enter The List Name"
