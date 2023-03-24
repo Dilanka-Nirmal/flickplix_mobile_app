@@ -7,7 +7,6 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Firebase imports
 import {
@@ -170,3 +169,15 @@ const RegistrationScreen = ({navigation}) => {
 };
 
 export default RegistrationScreen;
+
+/* Reference: https://reactnative.dev/
+              https://www.npmjs.com/
+              https://firebase.google.com/docs?authuser=0&hl=en
+              https://www.youtube.com/@DesignIntoCode
+              https://www.youtube.com/watch?v=0c0v_40MPq8&t=366s
+              https://www.youtube.com/watch?v=TwxdOFcEah4
+              https://www.youtube.com/watch?v=sc7RNl2YZHY
+              https://www.youtube.com/watch?v=zEL-L2F0o7Q
+              https://stackoverflow.com/
+              https://medium.com/
+ */
