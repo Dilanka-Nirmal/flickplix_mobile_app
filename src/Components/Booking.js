@@ -8,7 +8,7 @@ import {collection, db, getDocs} from './../../firebase';
 import {SafeAreaView} from 'react-native';
 import {FlatList} from 'react-native';
 import BookingItem from './BookingItem';
-import  {query, onSnapshot}  from 'firebase/firestore';
+import {query, onSnapshot} from 'firebase/firestore';
 
 export const Booking = () => {
   const [bookList, setBookList] = useState([]);
@@ -27,10 +27,8 @@ export const Booking = () => {
   //   });
   // };
 
-    const loadMoviePlanList = () => {
-    const q = query(
-      collection(db, 'Bookings')
-    );
+  const loadMoviePlanList = () => {
+    const q = query(collection(db, 'Bookings'));
 
     const unsubscribe = onSnapshot(q, querySnapshot => {
       const lists = [];
@@ -40,9 +38,8 @@ export const Booking = () => {
       });
 
       setBookList(lists);
-      console.log(bookList);
     });
-  }
+  };
 
   useEffect(() => {
     setTimeout(() => {

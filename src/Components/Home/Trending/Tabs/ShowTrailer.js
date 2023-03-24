@@ -3,37 +3,43 @@
 /* eslint-disable quotes */
 /* eslint-disable keyword-spacing */
 /* eslint-disable prettier/prettier */
-import { StyleSheet, 
-Text,
-SafeAreaView,
-View,
-Pressable,
-TextInput,
-Button,
- } from 'react-native';
-import { useEffect, useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  SafeAreaView,
+  View,
+  Pressable,
+  TextInput,
+  Button,
+} from 'react-native';
+import {useEffect, useState} from 'react';
 import SelectDropdown from 'react-native-select-dropdown';
-import {auth, db, getFirestore, collection, addDoc} from "./../../../../../firebase";
+import {
+  auth,
+  db,
+  getFirestore,
+  collection,
+  addDoc,
+} from './../../../../../firebase';
 import {useNavigation} from '@react-navigation/native';
 
-export const ShowTrailer = ({})=>{
+export const ShowTrailer = ({}) => {
   const times = ['10.30', '1.15', '4.15'];
-  const theatres = ['Savoy','Majestic Cineplex','Liberty Cinema'];
-  const [theatreName, setTheatreName] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [qty, setQty] = useState("");
-   const navigation = useNavigation();
+  const theatres = ['Savoy', 'Majestic Cineplex', 'Liberty Cinema'];
+  const [theatreName, setTheatreName] = useState('');
+  const [startTime, setStartTime] = useState('');
+  const [qty, setQty] = useState('');
+  const navigation = useNavigation();
 
-  const addBooking = async ()=>{
-    try{
-      const docRef = await addDoc(collection(db,"Bookings"),{
-        time: startTime ,
+  const addBooking = async () => {
+    try {
+      const docRef = await addDoc(collection(db, 'Bookings'), {
+        time: startTime,
         theatreName: theatreName,
         qty: qty,
       });
-      console.log("Document written with ID: ", docRef.id);
-    }catch(e){
-      console.error("Error adding document: ",e);
+    } catch (e) {
+      console.error('Error adding document: ', e);
     }
   };
 
@@ -86,20 +92,25 @@ export const ShowTrailer = ({})=>{
         style={styles.input}
         onChangeText={text => setQty(text)}
         value={qty}
-       // onSubmitEditing={addBooking}
+        // onSubmitEditing={addBooking}
       />
       <Button
-        onPress={() => {addBooking(); navigation.navigate('Booking');}}
+        onPress={() => {
+          addBooking();
+          navigation.navigate('Booking');
+        }}
         style={styles.btn}
         title="Book Now"
       />
       <Button
-      title="View"
-        onPress={()=>{navigation.navigate('Booking')}}
+        title="View"
+        onPress={() => {
+          navigation.navigate('Booking');
+        }}
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -109,10 +120,10 @@ const styles = StyleSheet.create({
   infoContainer: {
     flex: 1,
   },
-  btn:{
-    marginTop:40,
-    marginLeft:20,
-    marginRight:20,
+  btn: {
+    marginTop: 40,
+    marginLeft: 20,
+    marginRight: 20,
   },
   emptyContainer: {
     alignItems: 'center',
@@ -121,9 +132,9 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   buttonContainer: {},
-  timename:{
-    color:'#fff',
-    fontSize:20,
+  timename: {
+    color: '#fff',
+    fontSize: 20,
   },
   input: {
     backgroundColor: '#fff',
@@ -134,7 +145,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 20,
     marginRight: 20,
-    marginBottom:20,
+    marginBottom: 20,
   },
   time: {
     width: '80%',
@@ -156,4 +167,3 @@ const styles = StyleSheet.create({
     color: '#000',
   },
 });
- 

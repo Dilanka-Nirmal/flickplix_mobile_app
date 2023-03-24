@@ -1,33 +1,20 @@
-/* eslint-disable no-undef */
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-trailing-spaces */
-/* eslint-disable prettier/prettier */
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, Text} from 'react-native';
-import {collection, db, getDocs} from './../../firebase';
+import {collection, db} from './../../firebase';
 import {SafeAreaView} from 'react-native';
 import {FlatList} from 'react-native';
-import {WatchItem} from '../Components/WatchItem';
+import {WatchItem} from '../Components/WatchList/WatchItem';
 import {query, onSnapshot} from 'firebase/firestore';
+import COLORS from '../Components/Animation/Colors';
 
 export const WatchList = () => {
-  const [bookList, setBookList] = useState([]);
+  const [watchList, setWatchList] = useState([]);
 
-  // const getbookingList = async () => {
-  //   const querySnapshot = await getDocs(collection(db, 'Bookings'));
-  //   querySnapshot.forEach(doc => {
-  //     //console.log(doc.id,doc.data());
-  //     //setBookList({...doc.data()});
-  //     setBookList({
-  //       ...doc.data(),
-  //       id: doc.id,
-  //     });
+  useEffect(() => {
+    getWatchList();
+  }, []);
 
-  //     console.log(bookList);
-  //   });
-  // };
-
-  const loadMoviePlanList = () => {
+  const getWatchList = () => {
     const q = query(collection(db, 'WatchList'));
 
     const unsubscribe = onSnapshot(q, querySnapshot => {
@@ -37,33 +24,23 @@ export const WatchList = () => {
         lists.push({id: doc.id, ...doc.data()});
       });
 
-      setBookList(lists);
-      console.log(bookList);
+      setWatchList(lists);
     });
   };
-
-  useEffect(() => {
-    setTimeout(() => {
-      loadMoviePlanList();
-    }, 5000);
-  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.heading}>Watch List</Text>
+        <Text style={styles.heading}>To be Watch List</Text>
       </View>
-
-      {/* <BookingItem/> */}
-      {/* {
-  bookList.length > 0 ? ( */}
       <FlatList
-        data={bookList}
+        data={watchList}
         renderItem={({item}) => (
           <WatchItem
-            img={item.fanart}
+            poster={item.poster}
             title={item.title}
             releasedIn={item.releasedIn}
+            id={item.id}
           />
         )}
         keyExtractor={item => item.id}
@@ -76,7 +53,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    backgroundColor: '#323232',
+    backgroundColor: COLORS.blue,
   },
   heading: {
     fontSize: 20,
@@ -92,26 +69,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 200,
     opacity: 0.5,
-  },
-  buttonContainer: {},
-  input: {
-    backgroundColor: '#fff',
-    padding: 10,
-    fontSize: 15,
-    width: '100%',
-    alignSelf: 'center',
-    marginTop: 20,
-  },
-  button: {
-    backgroundColor: '#D8E9A8',
-    padding: 10,
-    width: '30%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 20,
-  },
-  buttonText: {
-    fontSize: 17,
-    color: '#000',
   },
 });
