@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, {useEffect} from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import {NavigationContainer} from '@react-navigation/native';
@@ -9,6 +10,9 @@ import LoginScreen from './src/Components/Account/LoginScreen';
 import RegistrationScreen from './src/Components/Account/RegistrationScreen';
 import ResetPasswordScreen from './src/Components/Account/ResetPasswordScreen';
 import {MainNavigator} from './src/Navigation/AppNavigator/MainNavigator/MainNavigator';
+import {TrendingDetails} from './src/Components/Home/Trending/Screen/TrendingDetails';
+import {TvShowDetails} from './src/Components/Home/Discover/Component/TvShowDetails';
+import { Booking } from './src/Components/Booking';
 
 const Stack = createNativeStackNavigator();
 
@@ -65,6 +69,9 @@ export default function App() {
               component={ResetPasswordScreen}
             />
             <Stack.Screen name="MainNavigator" component={MainNavigator} />
+            <Stack.Screen name="TrendingDetails" component={TrendingDetails} />
+            <Stack.Screen name="TvShowDetails" component={TvShowDetails} />
+            <Stack.Screen name="Booking" component={Booking}/>
           </Stack.Navigator>
         </>
       )}

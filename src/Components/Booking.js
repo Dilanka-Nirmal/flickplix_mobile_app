@@ -7,10 +7,10 @@ import {StyleSheet, View, Text} from 'react-native';
 import {collection, db, getDocs} from './../../firebase';
 import {SafeAreaView} from 'react-native';
 import {FlatList} from 'react-native';
-import {WatchItem} from '../Components/WatchItem';
-import {query, onSnapshot} from 'firebase/firestore';
+import BookingItem from './BookingItem';
+import  {query, onSnapshot}  from 'firebase/firestore';
 
-export const WatchList = () => {
+export const Booking = () => {
   const [bookList, setBookList] = useState([]);
 
   // const getbookingList = async () => {
@@ -27,8 +27,10 @@ export const WatchList = () => {
   //   });
   // };
 
-  const loadMoviePlanList = () => {
-    const q = query(collection(db, 'WatchList'));
+    const loadMoviePlanList = () => {
+    const q = query(
+      collection(db, 'Bookings')
+    );
 
     const unsubscribe = onSnapshot(q, querySnapshot => {
       const lists = [];
@@ -40,7 +42,7 @@ export const WatchList = () => {
       setBookList(lists);
       console.log(bookList);
     });
-  };
+  }
 
   useEffect(() => {
     setTimeout(() => {
@@ -51,7 +53,7 @@ export const WatchList = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.heading}>Watch List</Text>
+        <Text style={styles.heading}>My Bookings</Text>
       </View>
 
       {/* <BookingItem/> */}
@@ -60,10 +62,10 @@ export const WatchList = () => {
       <FlatList
         data={bookList}
         renderItem={({item}) => (
-          <WatchItem
-            img={item.fanart}
-            title={item.title}
-            releasedIn={item.releasedIn}
+          <BookingItem
+            theatreName={item.theatreName}
+            time={item.time}
+            qty={item.qty}
           />
         )}
         keyExtractor={item => item.id}
