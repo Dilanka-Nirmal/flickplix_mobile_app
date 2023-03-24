@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import {initializeApp} from 'firebase/app';
 import {getAuth} from 'firebase/auth';
-import {initializeFirestore, getFirestore, collection, addDoc, getDocs} from 'firebase/firestore';
+import {initializeFirestore, getFirestore, collection, addDoc, getDocs, deleteDoc} from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCamdFYFk4uc3CQpZ1hyhAIHxGlRMEgv-0',
@@ -22,4 +22,4 @@ const auth = getAuth(app);
  });
 //const db = getFirestore(app);
 
-export {auth, db, getFirestore, collection, addDoc, getDocs};
+export {auth, db, getFirestore, collection, addDoc, getDocs, deleteDoc};

@@ -30,6 +30,7 @@ export const ShowTrailer = ({})=>{
         time: startTime ,
         theatreName: theatreName,
         qty: qty,
+        //confirm: false,
       });
       console.log("Document written with ID: ", docRef.id);
     }catch(e){

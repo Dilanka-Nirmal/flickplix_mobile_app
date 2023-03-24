@@ -66,6 +66,8 @@ export const Booking = () => {
             theatreName={item.theatreName}
             time={item.time}
             qty={item.qty}
+            id={item.id}
+            loadMoviePlanList={loadMoviePlanList}
           />
         )}
         keyExtractor={item => item.id}
