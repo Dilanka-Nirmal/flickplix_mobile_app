@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Home} from '../../../Features/Home';
@@ -5,6 +6,8 @@ import {WatchList} from '../../../Features/WatchList';
 import {Payment} from '../../../Features/Payment';
 import {MoviePlan} from '../../../Features/MoviePlan';
 import {Profile} from '../../../Features/Profile';
+
+import React from 'react';
 
 const Tab = createBottomTabNavigator();
 
@@ -63,6 +66,7 @@ export const MainNavigator = () => {
           headerShown: false,
         }}
       />
+     
     </Tab.Navigator>
   );
 };
