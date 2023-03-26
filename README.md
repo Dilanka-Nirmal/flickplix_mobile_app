@@ -10,7 +10,7 @@
 
 #### Group Id : 45
 
-| IT Number  |               Name |                       Respective Function |
+| ID Number  |               Name |                       Respective Function |
 | :--------- | -----------------: | ----------------------------------------: |
 | IT19251110 |       Deshan W.M.Y |                  Movie Booking Management |
 | IT19184722 |       Nirmal H.I.D | User Management and Movie Plan Management |
