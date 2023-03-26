@@ -4,16 +4,16 @@ import {deleteDoc, doc} from 'firebase/firestore';
 import {db} from '../../../firebase';
 import COLORS from '../Animation/Colors';
 
-const removeFromWatchList = id => {
-  const docRef = doc(db, 'WatchList', id);
-  deleteDoc(docRef)
-    .then(() => {
-      console.log('Document successfully deleted!');
-    })
-    .catch(error => {
-      console.error('Error removing document: ', error);
-    });
-};
+// const removeFromWatchList = id => {
+//   const docRef = doc(db, 'WatchList', id);
+//   deleteDoc(docRef)
+//     .then(() => {
+//       console.log('Document successfully deleted!');
+//     })
+//     .catch(error => {
+//       console.error('Error removing document: ', error);
+//     });
+// };
 
 export const WatchItem = props => {
   return (
